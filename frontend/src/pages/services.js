@@ -167,10 +167,10 @@ export default function Services({ services }) {
               transition={{ duration: 0.7 }}
               className="p-8 text-center glass acid-glow"
             >
-              <div className="mb-2 text-6xl font-black" style={{ fontFamily: 'var(--font-display)', color: 'var(--acid)' }}>150+</div>
+              <div className="mb-2 text-6xl font-black" style={{ fontFamily: 'var(--font-display)', color: 'var(--acid)' }}>3+</div>
               <div className="mb-6 text-lg font-bold" style={{ fontFamily: 'var(--font-display)' }}>Projects Shipped</div>
               <div className="grid grid-cols-2 gap-4">
-                {[['98%', 'On-Time Delivery'], ['4.9/5', 'Avg. Rating'], ['3+', 'Years Active'], ['4+', 'Team Members']].map(([val, label]) => (
+                {[['98%', 'On-Time Delivery'], ['4.9/5', 'Avg. Rating'], ['1+', 'Years Active'], ['4+', 'Team Members']].map(([val, label]) => (
                   <div key={label} className="p-4 glass">
                     <div className="text-2xl font-black" style={{ fontFamily: 'var(--font-display)', color: 'var(--acid)' }}>{val}</div>
                     <div className="mt-1 text-xs" style={{ color: 'var(--text-muted)' }}>{label}</div>

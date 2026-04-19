@@ -10,19 +10,19 @@ const team = [
   {
     name : 'Imasha Pawan gamage',
     role : 'CEO & Co-founder',
-    bio  : 'Full-stack architect with 4+ years in enterprise software.',
+    bio  : 'Full-stack architect with 4+ years in enterprise software. UK Pearson',
     image: '/images/team/imasha.jpg', // ← photo URL මෙතන දාන්න
   },
   {
     name : 'Bathiya Nethsara',
     role : 'CTO',
-    bio  : 'Chief Technology Officer. Full-stack developer. 99x Trainee Software Engineer.',
+    bio  : 'Chief Technology Officer. Full-stack developer. 99x Trainee Software Engineer. 3 years Hand on project experience.',
     image: '/images/team/bathiya.jpeg', // ← photo URL මෙතන දාන්න
   },
   {
     name : 'Dulanjaya Thathsara',
     role : 'Head of Full-stack Development',
-    bio  : 'Head of Full-stack Development. Full-stack developer. 99x Trainee Software Engineer.',
+    bio  : 'Head of Full-stack Development. Full-stack developer. 99x Trainee Software Engineer.3 years Hand on project experience.',
     image: '/images/team/dulanjaya.jpeg', // ← photo URL මෙතන දාන්න
   },
 

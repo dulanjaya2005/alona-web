@@ -1,19 +1,62 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, Zap } from 'lucide-react';
 
+// ✅ ඔබේ logo settings මෙතන වෙනස් කරන්න
+// Logo image දාන්නේ: frontend/public/logo.png
+// ඉන් පස්සේ LOGO_IMAGE = '/logo.png' කරන්න
+const LOGO_IMAGE = '/logo.png';  // ← ඔබේ file name
+const LOGO_TEXT   = 'ALONA web';   // ← ඔබේ company name
+const LOGO_WIDTH  = 110;       // ← logo width (pixels)
+const LOGO_HEIGHT = 40;        // ← logo height (pixels)
+
 const navLinks = [
-  { href: '/', label: 'Home' },
+  { href: '/',         label: 'Home'     },
   { href: '/services', label: 'Services' },
   { href: '/projects', label: 'Projects' },
-  { href: '/about', label: 'About' },
-  { href: '/contact', label: 'Contact' },
+  { href: '/about',    label: 'About'    },
+  { href: '/contact',  label: 'Contact'  },
 ];
 
+// Logo component — image තියෙනවා නම් image, නැත්නම් text
+function Logo() {
+  if (LOGO_IMAGE) {
+    return (
+      <Image
+        src={LOGO_IMAGE}
+        alt={LOGO_TEXT}
+        width={LOGO_WIDTH}
+        height={LOGO_HEIGHT}
+        className="object-contain transition-opacity duration-200 group-hover:opacity-80"
+        priority
+      />
+    );
+  }
+
+  // Default text logo
+  return (
+    <div className="flex items-center gap-2">
+      <div
+        className="flex items-center justify-center flex-shrink-0 w-8 h-8"
+        style={{
+          background : 'var(--acid)',
+          clipPath   : 'polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 8px 100%, 0 calc(100% - 8px))',
+        }}
+      >
+        <Zap size={16} color="#0a0a0f" strokeWidth={2.5} />
+      </div>
+      <span style={{ fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: '1.2rem' }}>
+        {LOGO_TEXT}<span style={{ color: 'var(--acid)' }}>.</span>
+      </span>
+    </div>
+  );
+}
+
 export default function Navbar() {
-  const [scrolled, setScrolled] = useState(false);
+  const [scrolled, setScrolled]   = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const router = useRouter();
 
@@ -38,20 +81,15 @@ export default function Navbar() {
         }`}
         style={{ background: scrolled ? 'rgba(10,10,15,0.9)' : 'transparent' }}
       >
-        <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
+        <div className="flex items-center justify-between px-6 mx-auto max-w-7xl">
+
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-2 group">
-            <div className="w-8 h-8 flex items-center justify-center"
-              style={{ background: 'var(--acid)', clipPath: 'polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 8px 100%, 0 calc(100% - 8px))' }}>
-              <Zap size={16} color="#0a0a0f" strokeWidth={2.5} />
-            </div>
-            <span style={{ fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: '1.2rem' }}>
-              ALONA<span style={{ color: 'var(--acid)' }}>.</span>
-            </span>
+          <Link href="/" className="flex items-center group">
+            <Logo />
           </Link>
 
           {/* Desktop nav */}
-          <div className="hidden md:flex items-center gap-1">
+          <div className="items-center hidden gap-1 md:flex">
             {navLinks.map((link) => {
               const isActive = router.pathname === link.href;
               return (
@@ -60,8 +98,8 @@ export default function Navbar() {
                   href={link.href}
                   className="relative px-4 py-2 text-sm font-medium transition-colors duration-200"
                   style={{
-                    fontFamily: 'var(--font-display)',
-                    color: isActive ? 'var(--acid)' : 'rgba(240,240,245,0.7)',
+                    fontFamily : 'var(--font-display)',
+                    color      : isActive ? 'var(--acid)' : 'rgba(240,240,245,0.7)',
                     letterSpacing: '0.05em',
                   }}
                 >
@@ -69,7 +107,10 @@ export default function Navbar() {
                     <motion.span
                       layoutId="nav-indicator"
                       className="absolute inset-0 rounded"
-                      style={{ background: 'rgba(0,255,136,0.08)', border: '1px solid rgba(0,255,136,0.15)' }}
+                      style={{
+                        background  : 'rgba(0,255,136,0.08)',
+                        border      : '1px solid rgba(0,255,136,0.15)',
+                      }}
                       transition={{ type: 'spring', bounce: 0.2, duration: 0.4 }}
                     />
                   )}
@@ -79,8 +120,8 @@ export default function Navbar() {
             })}
           </div>
 
-          {/* CTA */}
-          <div className="hidden md:flex items-center gap-4">
+          {/* CTA button */}
+          <div className="items-center hidden gap-4 md:flex">
             <Link href="/contact" className="btn-primary text-xs py-2.5 px-5">
               Start Project
             </Link>
@@ -88,9 +129,10 @@ export default function Navbar() {
 
           {/* Mobile menu toggle */}
           <button
-            className="md:hidden p-2 transition-colors"
+            className="p-2 transition-colors md:hidden"
             style={{ color: 'var(--acid)' }}
             onClick={() => setMobileOpen(!mobileOpen)}
+            aria-label="Toggle menu"
           >
             {mobileOpen ? <X size={22} /> : <Menu size={22} />}
           </button>
@@ -105,10 +147,14 @@ export default function Navbar() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.2 }}
-            className="fixed top-16 left-0 right-0 z-40 border-b"
-            style={{ background: 'rgba(10,10,15,0.98)', borderColor: 'var(--border)', backdropFilter: 'blur(20px)' }}
+            className="fixed left-0 right-0 z-40 border-b top-16"
+            style={{
+              background  : 'rgba(10,10,15,0.98)',
+              borderColor : 'var(--border)',
+              backdropFilter: 'blur(20px)',
+            }}
           >
-            <div className="max-w-7xl mx-auto px-6 py-6 flex flex-col gap-1">
+            <div className="flex flex-col gap-1 px-6 py-6 mx-auto max-w-7xl">
               {navLinks.map((link, i) => (
                 <motion.div
                   key={link.href}
@@ -118,11 +164,11 @@ export default function Navbar() {
                 >
                   <Link
                     href={link.href}
-                    className="block px-4 py-3 rounded text-sm font-medium transition-all"
+                    className="block px-4 py-3 text-sm font-medium transition-all rounded"
                     style={{
-                      fontFamily: 'var(--font-display)',
-                      color: router.pathname === link.href ? 'var(--acid)' : 'rgba(240,240,245,0.8)',
-                      background: router.pathname === link.href ? 'rgba(0,255,136,0.08)' : 'transparent',
+                      fontFamily : 'var(--font-display)',
+                      color      : router.pathname === link.href ? 'var(--acid)' : 'rgba(240,240,245,0.8)',
+                      background : router.pathname === link.href ? 'rgba(0,255,136,0.08)' : 'transparent',
                       letterSpacing: '0.05em',
                     }}
                   >
@@ -130,8 +176,8 @@ export default function Navbar() {
                   </Link>
                 </motion.div>
               ))}
-              <div className="mt-4 pt-4" style={{ borderTop: '1px solid var(--border)' }}>
-                <Link href="/contact" className="btn-primary w-full justify-center">
+              <div className="pt-4 mt-4" style={{ borderTop: '1px solid var(--border)' }}>
+                <Link href="/contact" className="justify-center w-full btn-primary">
                   Start Project
                 </Link>
               </div>

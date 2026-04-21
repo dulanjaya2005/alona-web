@@ -108,7 +108,7 @@ const initDatabase = async () => {
 
     conn.release();
   } catch (err) {
-    console.error('❌ Database initialization error:', err.message);
+    console.error('❌ Database initialization error:', err);
     process.exit(1);
   }
 };

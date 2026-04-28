@@ -13,7 +13,7 @@ const PROJECTS = [
     description: 'A modern travel website developed for HappyTour with booking system, tour packages, and seamless user experience.',
     image      : 'https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?w=800',
     tech_stack : 'React, Node.js, MySQL',
-    demo_url   : 'https://happhttps://happytourssrilanka.com/',  // ← ඔබේ link
+    demo_url   : 'https://happytourssrilanka.com/',  // ← ඔබේ link
     github_url : '',
   },
   // ✅ අලුත් project add කරන්නේ මෙහෙමයි:
